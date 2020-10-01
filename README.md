@@ -25,4 +25,6 @@ Para encender splunk y tener nuestra aplicación web simplemente realizamos el s
 /opt/splunk/bin/splunk start
 ```
 
-Se nos pedirá aceptar la licencia y crear un usuario administrador para poder operar con splunk, una vez hecho ya podremos acceder a la web mediante el puerto 8000
+Se nos pedirá aceptar la licencia y crear un usuario administrador para poder operar con splunk, una vez hecho ya podremos acceder a la web mediante el puerto 8000.
+
+![](./splunk1.jpg)
