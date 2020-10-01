@@ -51,4 +51,17 @@ Escogeremos la imagen que queramos, en este caso nos descargaremos las de Cisco,
 ![](./gns3-3.png)
 
 
+#### Creación de Interfaz Loopback
+
+Para conectar todas las máquinas en una red y que pueda acceder a nuestro servidor de Syslog, debemos crear una interfaz loopback en nuestro ordenador, para ello daremos a la tecla Windows+R y escribiremos hdwwiz
+
+En dicha pestaña elegiremos la opción de Buscar e instalar software automáticamente -> Adaptadores de Red -> Microsoft -> Adaptador de bucle invertido KV-TEST de Microsoft.
+
+Una vez tengamos la red nos saldrá en nuestros adaptadores de redes:
+![](./loopback1.png)
+
+Ahora simplemente debemos compartir nuestra red con dicha interfaz, para ello damos click derecho a nuestra interfaz de red internet/ethernet -> Propiedades -> Uso Compartido y elegimos nuestra interfaz Loopback
+
+![](./loopback2.png)
+
 
