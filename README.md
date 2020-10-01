@@ -90,3 +90,51 @@ Automáticamente ya viene configurado para que recoga los syslog de las máquina
 Y ponemos esta acción, que hará que envie hacia la IP de nuestro servidor Splunk mediante el puerto UDP 2055 los syslogs recogidos en Kiwi.
 
 ![](./kiwi2.png)
+
+
+#### Configuración de Syslog-ng en la máquina Splunk
+
+Ahora instalaremos un programa llamado Syslog-ng para recoger los datos de Kiwi Syslog y enviarlos a un fichero de logs
+
+Para instalarlo simplemente ejecutamos el siguiente comando:
+
+```
+apt install syslog-ng
+```
+
+Vamos ahora a configurar nuestro syslog-ng para que recoga los logs, para ello vamos a /etc/syslog-ng/syslog-ng.conf y ponemos las siguientes líneas:
+```
+
+@version: 3.5
+@include "scl.conf"
+@include "`scl-root`/system/tty10.conf"
+    options {
+        time-reap(30);
+        mark-freq(10);
+        keep-hostname(yes);
+        };
+    source s_local { system(); internal(); };
+    source s_network {
+        syslog(transport(udp) port(2055));
+        };
+    filter f_mikrotik { host( "192.168.159.1" ); };
+    log { source ( s_network ); filter( f_mikrotik ); destination ( df_mikrotik ); };
+    destination df_mikrotik {
+    file("/var/log/syslog-ng/${HOST}.${YEAR}.${MONTH}.${DAY}.log"
+    template-escape(no)); };
+
+```
+
+Esto hará que todos los logs que se reciban mediante la Ip 192.168.159.1 se envien a la carpeta /var/log/syslog-ng (creada a mano) y se guarde en un archivo que contendrá el dia, el año y el mes de dichos logs.
+```
+root@splunk:/var/log/syslog-ng# ls
+192.168.159.1.2020.09.30.log  logs.txt
+
+root@splunk:/var/log/syslog-ng# cat 192.168.159.1.2020.09.30.log
+...
+...
+Sep 30 12:53:51 192.168.159.1 Original Address=192.168.137.5 Sep 30 10:53:51 vyos ntpd_intres[2217]: host name not found: 1.pool.ntp.org
+Sep 30 12:53:51 192.168.159.1 Original Address=192.168.137.5 Sep 30 10:53:51 vyos ntpd_intres[2217]: host name not found: 2.pool.ntp.org
+```
+
+
