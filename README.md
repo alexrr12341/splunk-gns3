@@ -137,4 +137,9 @@ Sep 30 12:53:51 192.168.159.1 Original Address=192.168.137.5 Sep 30 10:53:51 vyo
 Sep 30 12:53:51 192.168.159.1 Original Address=192.168.137.5 Sep 30 10:53:51 vyos ntpd_intres[2217]: host name not found: 2.pool.ntp.org
 ```
 
+Reiniciamos el servicio para que todo funcione correctamente y procederemos a configurar cada una de las máquinas.
+```
+systemctl restart syslog-ng
+```
+
 
