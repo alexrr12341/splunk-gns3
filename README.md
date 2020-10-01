@@ -180,5 +180,45 @@ R1#
 
 Y podemos ver como salen los logs en nuestro kiwi.
 
-![](kiwilogs1.png)
+![](./kiwilogs1.png)
 
+
+#### Máquina Mikrotik
+
+Ahora entramos en la máquina Mikrotik mediante la consola y haremos lo mismo que con la máquina CentOS.
+
+(En este caso ya lo tendremos configurado pero pondré todos los pasos)
+```
+[admin@MikroTik] > ip address
+[admin@MikroTik] /ip address> add address=192.168.137.3/24 interface=ether1
+failure: already have such address
+[admin@MikroTik] /ip address> print
+Flags: X - disabled, I - invalid, D - dynamic
+ #   ADDRESS            NETWORK         INTERFACE
+ 0   192.168.137.3/24   192.168.137.0   ether1
+
+[admin@MikroTik] > ip route
+[admin@MikroTik] /ip route> add gateway=192.168.137.1
+[admin@MikroTik] /ip route> print
+Flags: X - disabled, A - active, D - dynamic, C - connect, S - static, r - rip, b - bgp, o - ospf, m - mme, B - blackhole, U - unreachable, P - prohibit
+ #      DST-ADDRESS        PREF-SRC        GATEWAY            DISTANCE
+ 0 A S  0.0.0.0/0                          192.168.137.1             1
+ 1   S  0.0.0.0/0                          192.168.137.1             1
+ 2 ADC  192.168.137.0/24   192.168.137.3   ether1                    0
+```
+
+Ahora nos conectaremos al servidor de syslog mediante los siguientes comandos:
+```
+
+[admin@MikroTik] > /system logging action
+[admin@MikroTik] /system logging action> set 3 remote=192.168.137.1
+[admin@MikroTik] /system logging action> add name=ZLogServer remote=192.168.137.1 target=remote
+failure: action already exists with such a name
+[admin@MikroTik] /system logging action> /system logging
+[admin@MikroTik] /system logging> add action=ZLogServer topics=pppoe,ppp,info
+[admin@MikroTik] /system logging> add action=ZLogServer topics=system,info
+```
+
+Y en Kiwi podremos observar como se envian los logs
+
+![](./kiwilogs2.png)
