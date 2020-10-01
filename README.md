@@ -222,3 +222,58 @@ failure: action already exists with such a name
 Y en Kiwi podremos observar como se envian los logs
 
 ![](./kiwilogs2.png)
+
+
+#### Máquina Vyos
+
+Ahora entramos a la máquina Vyos mediante la consola, y hacemos lo que hemos hecho anteriormente con las demás máquinas.
+```
+
+root@vyos:~# ip a add 192.168.137.4/24 dev eth0
+root@vyos:~# ip l set eth0 up
+root@vyos:~# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 0c:cd:c2:d5:da:00 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.137.4/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::ecd:c2ff:fed5:da00/64 scope link
+       valid_lft forever preferred_lft forever
+3: eth1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc pfifo_fast state DOWN group default qlen 1000
+    link/ether 0c:cd:c2:d5:da:01 brd ff:ff:ff:ff:ff:ff
+4: eth2: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc pfifo_fast state DOWN group default qlen 1000
+    link/ether 0c:cd:c2:d5:da:02 brd ff:ff:ff:ff:ff:ff
+```
+
+Y ahora solo debemos conectarnos al servidor de syslog
+```
+
+vyos@vyos:~$ configure
+[edit]
+vyos@vyos# set system syslog host 192.168.137.1 facility all level info
+[edit]
+vyos@vyos# set system syslog host 192.168.137.1 facility mark level info
+[edit]
+vyos@vyos# save
+Warning: you have uncommitted changes that will not be saved.
+
+Saving configuration to '/config/config.boot'...
+Done
+[edit]
+vyos@vyos# commit
+[ system syslog ]
+Stopping enhanced syslogd: rsyslogd.
+Starting enhanced syslogd: rsyslogd.
+
+[edit]
+
+```
+
+Podemos observar como Kiwi recoge los logs de la máquina vyos
+
+![](kiwilogs4.png)
