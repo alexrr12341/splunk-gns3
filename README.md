@@ -301,3 +301,30 @@ systemctl restart rsyslog
 Observamos como se envian los logs a nuestro servidor Kiwi
 
 ![](./kiwilogs4.png)
+
+
+### Búsqueda de Logs en Splunk
+
+Ahora cuando tenemos todo configurado, observamos que en nuestra carpeta /var/log/syslog-ng tenemos nuestros logs del día de hoy, en este caso:
+```
+root@splunk:/var/log/syslog-ng# ls
+192.168.159.1.2020.09.30.log  192.168.159.1.2020.10.01.log  logs.txt
+```
+
+Tenemos los del día de hoy, 1 de octubre, si entramos veremos que tendremos los logs anteriormente mostrados:
+```
+...
+...
+et '/run/systemd/journal/syslog' (fd 3) from systemd.  [v8.32.0]
+Oct  1 13:43:02 192.168.159.1 Original Address=192.168.137.5 Oct  1 11:43:01 gns3 rsyslogd: rsyslogd's groupid changed to 106
+Oct  1 13:43:02 192.168.159.1 Original Address=192.168.137.5 Oct  1 11:43:01 gns3 rsyslogd: rsyslogd's userid changed to 102
+Oct  1 13:43:02 192.168.159.1 Original Address=192.168.137.5 Oct  1 11:43:01 gns3 rsyslogd:  [origin software="rsyslogd" swVersion="8.32.0" x-pid="2818" x-info="http://www.rsyslog.com"] start
+```
+
+Ahora solo tendremos que entrar a Splunk.
+
+Le daremos a la opción de Add Data -> Monitor -> Files & Directories (Escogemos el fichero en este caso /var/log/syslog-ng/192.168.159.1.2020.10.01.log y la opción Continuosly Monitor) -> Presionamos Next y le damos un nombre al Source -> En la parte donde ponga Host field value ponemos 192.168.159.1 y damos a Review 
+-> Submit -> Start searching
+
+Y ya podremos analizar los logs de las máquinas
+![](./splunklogs1.png)
