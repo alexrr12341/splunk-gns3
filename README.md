@@ -64,4 +64,14 @@ Ahora simplemente debemos compartir nuestra red con dicha interfaz, para ello da
 
 ![](./loopback2.png)
 
+#### Creación de Red Loopback en GNS3
 
+Para crear una red que se conecte a nuestro Loopback, simplemente vamos a Browse End Devices -> Cloud y lo arrastramos al escenario.
+
+Le damos a click derecho -> Configure -> Show special Ethernet interfaces y elegimos nuestra interfaz loopback y le damos a add, si queremos podemos eliminar las otras que ya están.
+
+![](./loopback3.png)
+
+Simplemente tendremos que conectar las máquinas a cada Cloud y ya las tendremos para configurar en la misma red.
+
+![](./loopback4.png)
