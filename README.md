@@ -75,3 +75,18 @@ Le damos a click derecho -> Configure -> Show special Ethernet interfaces y eleg
 Simplemente tendremos que conectar las máquinas a cada Cloud y ya las tendremos para configurar en la misma red.
 
 ![](./loopback4.png)
+
+
+### Instalación y configuración de Kiwi Syslog
+
+Ahora vamos a instalar un servidor de syslog que recoja los datos de GNS3 para enviarlos posteriormente a Splunk, para ello nos vamos a la [página de descarga de Kiwi Syslog](https://www.kiwisyslog.com/free-tools/kiwi-free-syslog-server).
+
+Una vez descargado tendremos esta pestaña.
+
+![](./kiwi1.png)
+
+Automáticamente ya viene configurado para que recoga los syslog de las máquinas que se envien por el puerto 514, lo único que vamos a hacer es configurar el envio de esos logs hacia nuestro servidor splunk, para ello vamos a File -> Setup -> Add Rule
+
+Y ponemos esta acción, que hará que envie hacia la IP de nuestro servidor Splunk mediante el puerto UDP 2055 los syslogs recogidos en Kiwi.
+
+![](./kiwi2.png)
