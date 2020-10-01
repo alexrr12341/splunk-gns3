@@ -142,4 +142,43 @@ Reiniciamos el servicio para que todo funcione correctamente y procederemos a co
 systemctl restart syslog-ng
 ```
 
+### Configuración de las máquinas en GNS3
+
+Vamos ahora a configurar las 4 máquinas, para ello tendremos que darles una IP en el rango de nuestra interfaz loopback (192.168.137.0/24) con su gateway en 192.168.137.1 y hacer logging a nuestro servidor de kiwi, en este caso 192.168.137.1
+
+#### Máquina CentOS
+
+Entramos a la máquina CentOS mediante la consola, tendremos que añadirle una IP, para ello ejecutamos los siguientes comandos:
+
+```
+
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#interface fa0/0
+R1(config-if)#
+R1(config-if)#ip add 192.168.137.2 255.255.255.0
+R1(config-if)#no shutdown
+*Mar  1 00:17:21.247: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state to up
+*Mar  1 00:17:22.247: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/0, changed state to up
+R1#
+*Mar  1 00:17:24.899: %SYS-5-CONFIG_I: Configured from console by console
+```
+
+Y hacemos logging a nuestro servidor de Kiwi
+```
+
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#logging host 192.168.137.1
+R1(config)#logging trap 6
+R1(config)#exit
+R1#
+*Mar  1 00:18:19.283: %SYS-5-CONFIG_I: Configured from console by console
+R1#
+*Mar  1 00:18:20.287: %SYS-6-LOGGINGHOST_STARTSTOP: Logging to host 192.168.137.1 port 514 started - CLI initiated
+```
+
+Y podemos ver como salen los logs en nuestro kiwi.
+
+![](kiwilogs1.png)
 
