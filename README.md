@@ -276,4 +276,4 @@ Starting enhanced syslogd: rsyslogd.
 
 Podemos observar como Kiwi recoge los logs de la máquina vyos
 
-![](kiwilogs4.png)
+![](./kiwilogs3.png)
