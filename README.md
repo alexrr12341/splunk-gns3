@@ -277,3 +277,27 @@ Starting enhanced syslogd: rsyslogd.
 Podemos observar como Kiwi recoge los logs de la máquina vyos
 
 ![](./kiwilogs3.png)
+
+
+#### Máquina Ubuntu
+
+Haremos lo mismo que con todas las anteriores máquinas, le pondremos un rango de IP al de loopback y nos conectaremos mediante rsyslog a nuestro kiwi syslog.
+
+```
+root@gns3:~# ip a add 192.168.137.5/24 dev ens3
+root@gns3:~# ip l set ens3 up
+```
+
+Ahora simplemente configuramos el fichero /etc/rsyslog.d/50-default.conf y al final del todo ponemos esta línea:
+```
+*.* @192.168.137.1:514
+```
+
+Y reiniciamos el servicio:
+```
+systemctl restart rsyslog
+```
+
+Observamos como se envian los logs a nuestro servidor Kiwi
+
+![](./kiwilogs4.png)
