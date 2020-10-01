@@ -328,3 +328,7 @@ Le daremos a la opción de Add Data -> Monitor -> Files & Directories (Escogemos
 
 Y ya podremos analizar los logs de las máquinas
 ![](./splunklogs1.png)
+
+Si queremos analizar los logs de una máquina concreta, en este ejemplo la de ubuntu, en la barra de búsqueda pondremos la ip de la máquina:
+![](./splunklogs2.png)
+![](./splunklogs3.png)
